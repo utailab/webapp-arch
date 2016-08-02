@@ -1,8 +1,8 @@
 # Web Application Architecture
 
-### Introduction
+## Introduction
 
-### What is a Web Application?
+## What is a Web Application?
 
 A web application is nothing more than a program that uses Web technologies to
 receive input and send output. To get a better understanding of a web
@@ -23,14 +23,14 @@ USA. A dynamic web site is one kind of web application, since it uses Web
 technologies.
 
 
-### What are Web technologies?
+## What are Web technologies?
 
 Web technologies are collection of various technologies that form the Web,
 notably HTTP, HTML, CSS and Javascript. These are the horse power of the Web.
 In the following section we will briefly look at these technologies.
 
 
-### HTTP
+## HTTP
 
 HTTP stands for Hyper Text Transfer Protocol. It's a network protocol of the
 application layer. Web browsers such as Firefox and web servers like Apache are
@@ -38,7 +38,7 @@ among the programs that understand this protocol. The exact mechanism of the
 HTTP protocol is a bit complicated but a high-level view as the following:
 
 
-### HTML
+## HTML
 
 Hyper Text Markup Language or HTML is not really a programming language but a
 markup language. A markup language uses a special syntax to mark regions of the
@@ -50,7 +50,7 @@ valid HTML text can be parsed and loaded into the memory as a tree data
 structure which is called Document Object Model or DOM.
 
 
-### CSS
+## CSS
 
 A simple HTML is sufficient to draw text with simple elements such as bold text
 and headers. But for more elaborate representation of text, it's not really as
@@ -60,7 +60,7 @@ HTML text. Using CSS, one can position HTML elements (an HTML element is simply
 an HTML tag) or change its color or size.
 
 
-### Javascript
+## Javascript
 
 In contrast to HTML and CSS, Javascript is a full-blown programming language.
 It is mostly used to manipulate the DOM but it can do whatever other programing
