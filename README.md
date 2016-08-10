@@ -18,10 +18,10 @@ technologies.
 
 ## The Big Picture
 
-Reminder: Don't panic if you don't understand few or even none of this section.
+**Note**: Don't panic if you don't understand few or even none of this section.
 This section just tries to give an overview of what is going on when you
 interact with a web app. Over the time and after playing with various pieces of
-this puzzle, you'll start to understand each piece and they will feel less
+this puzzle, you'll start to understand each piece and it will feel less
 intimidating. Thus, for the moment, focus on the procedure rather than the
 details.
 
@@ -141,3 +141,81 @@ provide. Using the functions and classes provided by these frameworks, we can
 program in the programming language of the framework to generate dynamic
 contents. For example, since Django is written in Python, we should program in
 Python to call Django's API.
+
+## Web Application Architecture Case Study
+
+In this case study we are going to look at the Django web framework. Django is
+written in Python and has been around since 2005. The reason we chose Django as
+our case study is that, while it's an industry standard web framework and many
+huge web applications such as Instagram use it as their framework, it's fairly
+simple and straightforward. One can, without having to delve into the
+nitty-gritty details of it, start developing a simple web application to
+understand the web application architecture.
+
+## Django Primer
+
+The first step to use Django is obviously to install it. To install Django, we
+should use Python package manager `pip`. Beware that in Debian-based distros
+such as Ubuntu, there are two `pip` commands. `pip` which is for Python version
+2 and `pip3` which grabs and installs packages for Python 3. Since we use
+Python 3 in our examples, we're going to use `pip3`. Normally it's not
+installed by default. Let's install it first.
+
+    sudo apt-get install pip3
+
+Having installed `pip3`, we're ready to install Django:
+
+    sudo pip3 install django
+
+Done. We successfully installed Django. Next step is to setup the project.
+Navigate to your home directory.
+
+    cd ~
+
+And issue this command:
+
+    django-admin startproject helloworld
+
+Now by listing the files through `ls`, we see that Django has created a new
+directory named `helloworld`. The directory has the following structure:
+
+    helloworld
+    |-- helloworld
+    |   |-- __init__.py
+    |   |-- settings.py
+    |   |-- urls.py
+    |   `-- wsgi.py
+    `-- manage.py
+
+Let's `cd` into the `hellowrold` directory. Listing the directory, there is the
+`manage.py` script by which we'll issue Django's commands. You can see that
+inside the `helloworld` directory, there is another `helloworld` directory
+containing some Python scripts. We're going to ignore them for the moment but
+we'll get back to them later.
+
+Although we haven't written any code yet, the machinery to run a web app is OK.
+Thus we can run Django's *development server* to test it. Open up another
+terminal, navigate to the project directory where `manage.py` is located and
+enter this command:
+
+    python3 manage.py runserver
+
+It prints something like this:
+
+    August 10, 2016 - 17:40:34
+    Django version 1.9.5, using settings 'helloworld.settings'
+    Starting development server at http://127.0.0.1:8000/
+    Quit the server with CONTROL-C.
+
+You may encounter with a line indicating that you have `unapplied migrations`
+but it's not important. Your Django version may also be different from us but
+it's fine. The message shows that the development server is at
+`http://127.0.0.1:8000/`. Open up your web browser and enter the address.
+If everything is OK, it should show something like this:
+
+    It worked!
+    Congratulations on your first Django-powered page.
+
+But what happened when you entered the address and hit enter? What happened is
+almost similar to the section [The Big Picture](#the-big-picture) (We suggest
+rereading that section).
