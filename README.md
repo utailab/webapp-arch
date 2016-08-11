@@ -87,6 +87,48 @@ application layer. Web browsers such as Firefox and web servers like Apache are
 among the programs that understand this protocol. The exact mechanism of the
 HTTP protocol is a bit complicated but a high-level view is as follows:
 
+Before we explain the HTTP protocol, we should understand what a protocol is. A
+protocol is a set of conventions that we use to convey our intentions. For
+instance, the protocol that we use to make these information known to you, is
+English but the protocol we use to communicate with, e.g. Iranians is Persian.
+The protocol we use to instruct the computer is the CPU opcodes of it (all
+programming languages instruction are eventually translated to CPU opcodes). One
+of the protocols used among the computers to communicate in a network, is HTTP
+(HTTP itself depends on some lower level protocols namely TCP and IP to
+function).
+
+Now that we have a fair understanding of what a protocol is, let's see how the
+HTTP protocol works. HTTP works in a *client-server* manner. There is always a
+computer that initiates an *HTTP request* called the client and another
+computer that receives that HTTP request and responds to it with an *HTTP
+response* which is called the server. HTTP requests come in seven forms but
+currently we're only interested in two of them, *GET* and *POST*. When an HTTP
+request is of the form GET, it's requesting some content from the server to
+**get**. The server responds that request by sending the requested content to
+the client. This is informally known as *downloading*. However, when the request
+is of the form POST, the client is sending or **posting** some content to the
+server. When the server receives the content from the client it responds with
+message indicating that it successfully received the content.
+
+Life would be easier if there were no errors. However, there is always a chance
+of some kind of errors in every action, and HTTP is no exception. What if the
+content we're requesting isn't available? What if the server's storage space is
+full and cannot accept anymore content? To solve this problem the server sends
+a *status code* to the client. You may have encountered the infamous *404*
+status code when you request some web page that does not exist. This how the
+web server informs the client of an error.
+
+Every GET HTTP request, asks for a content. The content could be a web page, a
+movie, a song and etc. The way that client requests the desired content is very
+simple. The client starts its HTTP request with a line containing a line like
+`GET /index.html HTTP/1.1`. This can be translated like this: I want to **get**
+the index.html web page which is located at `/`. The `/`part is the address of
+the content. So if were to request `bar.html` located at a directory such as
+`foo`, it the address would be something like `/foo/bar.html`. You can see the
+similarity between that address and the way your files are stored in a UNIX
+(Linux) file system, and this is not a coincidence. The HTTP protocol was
+invented on UNIX machines after all.
+
 ## HTML
 
 Hyper Text Markup Language or *HTML* is not really a programming language but a
@@ -220,5 +262,41 @@ If everything goes well, it should show something like this:
     Congratulations on your first Django-powered page.
 
 But what happened when you entered the address and hit enter? What happened is
-almost similar to the section [The Big Picture](#the-big-picture) (We suggest
-rereading that section).
+**almost** similar to the section [The Big Picture](#the-big-picture) (We
+suggest rereading that section).
+
+For more investigation, put the web browser and the terminal window containing
+Django's development server side by side. Refresh the web page in the browser.
+You can see that whenever you refresh the page, two lines is printed in the
+terminal window:
+
+    Not Found: /
+    [11/Aug/2016 08:21:28] "GET / HTTP/1.1" 200 1767
+
+Let's talk about the second line first. It shows that an HTTP request has just
+arrived at the web server requesting some resource at `/` (We'll explain `/` in
+just a minute) and the web server has responded with no problem (the 200 is for
+this reason). So if there was no problem serving the request, why does the
+first line say "Not Found"? To get the answer, you should (re)read the section
+[HTTP](#http). Building on what you learned in the HTTP section, you may notice
+that the content (sometimes called resource) we requested from the server was
+`/` which means no file is associated with this address (it should have been
+something like `/foo.html`). This is something related to the dynamic nature of
+the web applications that we'll cover it later in this article. The reason that
+the first line says "Not Found: /", is that we requested the server to send us
+whatever resource is associated with the address `/` and since that we don't
+have any resources associated with this address, the server simply responded
+with "Not Found". Django, however, is configured to respond with that default
+page when there is no resource associated with the this particular address `/`.
+To verify that, let's request another resource from the server. In the browser
+address bar, enter `localhost:8000/hello`. You can see that the server responded
+with:
+
+    Page not found (404)
+        Request Method:	GET
+           Request URL:	http://localhost:8000/hello
+
+Just as we expected.
+
+In the next step, we're going to associate some content with the address
+`/hello`.
