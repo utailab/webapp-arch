@@ -5,7 +5,7 @@
 Wikipedia defines a *web application* as follows:
 
 > In computing, a web application or web app is a client-server software
-> application in which the client (or user interface) runs in a web browser".
+> application in which the client (or user interface) runs in a web browser.
 
 But this definition won't make any sense to you unless you know what a
 *client-server* architecture is and what it takes to run a program in the
@@ -70,9 +70,9 @@ proper web page according to some parameters. This means that, for example, a
 request for a web page located at `http://foo.com/bar` might end up being
 differently generated for a user, say from Iran and another one from USA. A
 dynamic web site is one kind of web application, since it uses Web
-technologies. We said *one kind of Web applications* because there are other Web
-applications that do not necessarily generate HTML content. For instance, A web
-application might generate *JSON* output.
+technologies. We said "one kind of Web applications" because there are other
+Web applications that do not necessarily generate HTML content. For instance, A
+web application might generate JSON output.
 
 ## What are Web technologies?
 
@@ -121,7 +121,7 @@ runs the received JavaScript code on the client machine.
 
 A web framework such as Django, Rails or CakePHP, is not a web technology in
 sens of HTML or CSS but it plays a very fundamental role in web applications.
-You may ask how a web framework fits in this configuration? To answer this
+You may ask how a web framework fits in this configuration. To answer this
 question, one should note that a web framework is nothing more than a set of
 library functions and classes that facilitate generating dynamic content.
 Dynamic contents like their static counterparts have URLs associated to them.
@@ -143,7 +143,7 @@ PHP and the like because of their expressiveness and level of abstraction they
 provide. Using the functions and classes provided by these frameworks, we can
 program in the programming language of the framework to generate dynamic
 content. For example, since Django is written in Python, we should program in
-Python to call Django's *API*.
+Python to call Django's API.
 
 ## Web Application Architecture Case Study
 
