@@ -298,5 +298,77 @@ with:
 
 Just as we expected.
 
-In the next step, we're going to associate some content with the address
-`/hello`.
+Now, we're going to associate some content with the address `/hello`.  We need
+a way to map the address `/hello` to some content. Open up the `urls.py` module
+located at `helloworld/urls.py`. It's content is as follows:
+
+```python
+from django.conf.urls import url
+from django.contrib import admin
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+]
+```
+
+The important part here is the `urlpatterns` list. `urlpatterns` holds a
+mapping between URLs and **functions**. This is the key point. What
+distinguishes static web sites from dynamic web sites, is this very function.
+By mapping a URL to a function, we will be able to generate dynamic contents,
+depending on how the function is programmed. To define a mapping between the
+url `/hello` and a function, we can simply use the `url` function. This
+function takes two parameters (actually many but currently we're concerned with
+these two parameters). A string containing a URL and a function. But we don't
+have any function yet, so let's create one.
+
+Create a python module in the `helloworld` directory and name it something like
+`functions.py` and define a function within it like this:
+
+```python
+from django.http import HttpResponse
+
+def hello(request):
+    return HttpResponse('hello')
+```
+
+Now that we have our function ready, let's map it to the `/hello` URL. Add a
+`url`:
+
+```python
+from django.conf.urls import url
+from django.contrib import admin
+
+from .functions import hello
+
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^hello/', hello),
+]
+```
+
+And done. Let's see if it works properly. Enter `localhost:8000/hello` in the
+browser. It should show a blank page with a `hello` in it.
+
+But what happened when we requested `/hello` from the server? The server simply
+passed the HTTP request to Django. Django looked up its registry to find if it
+has any mappings from the address `/hello` to any function. Since Django found
+one (the one that we defined earlier), it passed the request to our function
+(that's why our function is defined with the parameter `request`. Every
+function which is registered with Django, must at least accept one argument
+which is the HTTP request).
+
+We have our function working, but one important point remains. If look closer,
+we'll find out that the `/hello` URL is not dynamic! On whatever request, our
+function just returns hello. To add some dynamics to it, we can say hello and
+show the time of the day.
+
+```python
+from django.http import HttpResponse
+from django.utils import timezone
+
+def hello(request):
+    return HttpResponse('hello, The time is: {}'.format(timezone.now()))
+```
+
+Now if you go to the address `/hello`, you'll see that with every request, the
+response changes, which means we have a dynamic page.
