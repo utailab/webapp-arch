@@ -162,7 +162,7 @@ runs the received JavaScript code on the client machine.
 ## Frameworks
 
 A web framework such as Django, Rails or CakePHP, is not a web technology in
-sens of HTML or CSS but it plays a very fundamental role in web applications.
+sense of HTML or CSS but it plays a very fundamental role in web applications.
 You may ask how a web framework fits in this configuration. To answer this
 question, one should note that a web framework is nothing more than a set of
 library functions and classes that facilitate generating dynamic content.
