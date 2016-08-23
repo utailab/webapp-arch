@@ -199,6 +199,8 @@ understand the web application architecture.
 
 ## Django Primer
 
+### Semantics
+
 The first step to use Django is obviously to install it. To install Django, we
 should use Python package manager `pip`. Beware that in Debian-based distros
 such as Ubuntu, there are two `pip` commands. `pip` which is for Python version
@@ -206,7 +208,7 @@ such as Ubuntu, there are two `pip` commands. `pip` which is for Python version
 Python 3 in our examples, we're going to use `pip3`. Normally it's not
 installed by default. Let's install it first.
 
-    sudo apt-get install pip3
+    sudo apt-get install python3-pip
 
 Having installed `pip3`, we're ready to install Django:
 
@@ -367,8 +369,100 @@ from django.http import HttpResponse
 from django.utils import timezone
 
 def hello(request):
-    return HttpResponse('hello, The time is: {}'.format(timezone.now()))
+    return HttpResponse('Hello, the time is: {}'.format(timezone.now()))
 ```
 
 Now if you go to the address `/hello`, you'll see that with every request, the
 response changes, which means we have a dynamic page.
+
+### Representation
+
+In the previous section, we successfully created a dynamic page that greets
+people and shows time of the day. But what if we wanted to emphasize on time of
+the day. Perhaps the time of the day part is more important to our visitors
+than the greeting part. In other words, what should we do to show time of the
+day in bold? Fortunately, HTML allows us to do the exact same thing. We can
+mark (tag) the time part of the response that we want to be rendered in bold.
+
+```python
+return HttpResponse('Hello, the time is: <strong>{}</strong>'.format(timezone.now()))
+```
+
+After refreshing the page, we can see that the time is rendered in bold.
+
+Putting an HTML tag in a python string might seem harmless in this tiny
+example, but suppose we wanted to show greetings in many languages and local
+times. That way, we would need a string of dozens of lines long with hundreds
+of HTML tags in it, supposedly with in-line styles and scripts. Although it's
+possible to put every thing in a string, it would definitely be a bad practice.
+Dealing with quotations, escaping characters, improper syntax highlighting and
+very long modules due to hundreds of HTML lines embedded in strings, would be a
+nightmare. A very much better approach is to separate HTML from Python, in
+other words, to separate **what** to show from **how** to show. Fortunately,
+this separation is possible and Django provides it through what is known as
+*templates*.
+
+Templates are simply HTML files with some extra syntax known to Django. These
+extra syntax act as place holders. In a function, we can produce some content
+and pass them to Django along with a template file. Django then substitutes the
+provided content with those place holders in the template. The act of
+substituting place holders with content is called *rendering*. For instance, we
+could change our function to use template similar to this:
+
+First, we create an HTML file and put it in `helloworld/helloworld` where
+`functions.py` is as well.
+
+```html
+<html>
+  <head>
+  </head>
+  <body>
+    <p>Hello, the time is <strong>{{ time }}</strong></p>
+  </body>
+</html>
+```
+
+Note the `{{ time }}` part. The `{{ }}` special syntax tells Django to replace
+the `{{ time }}` part with the value of `time`.
+
+Then, we should configure Django to find the template. Find the `TEMPLATES`
+dictionary variable in the `settings.py` and populate the empty list of its
+`DIRS` key with `BASE_DIR`. `TEMPLATES` should then look like this:
+
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+```
+
+And finally, we should use Django's `render` function to render our page.
+
+```python
+from django.utils import timezone
+from django.shortcuts import render
+
+
+def hello(request):
+    content = {'time': timezone.now()}
+    return render(request, 'time.html', content)
+```
+
+The `render` function, in addition to the request object, takes two other
+arguments: a template file name and a dictionary containing the key/values to
+be rendered. Note the `time` key of the content dictionary. It's must be the
+same name as we previously defined in the template.
+
+Now if we visit `localhost:8000/hello`, we'll see that everything works as
+expected.
